@@ -13,8 +13,8 @@ class App extends Component {
       { id: '5', name: 'Shivam', course: 'MCA', cgpa: 8.1},
       { id: '6', name: 'Sunidhi', course: 'MCA', cgpa: 7.8}
     ],
-    visibility : false
-  }
+    visibility : false 
+  } 
 
   // two way binding handler which update the state attribute my_name with the value provided in input element 
   twoWay_Binding = (event, stdid) => {
@@ -62,12 +62,13 @@ class App extends Component {
   render() {
 
     const Style1 = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'inherit',
       border : '1x solid blue',
       padding: '8px',
       cursor: 'pointer',
-      margin: '50px 10px 10px 10px'
+      margin: '20px 10px 10px 10px'
     }
 
     // let Div1;
@@ -88,19 +89,29 @@ class App extends Component {
           </Student>
       })
       }</div>
-      )
+      );
+
+     Style1.backgroundColor = 'red';
     }
 
     // conditionally define JSX, false condition
     else{
       // Div1 = null;
       Div2 = null;
+      Style1.backgroundColor = 'green';
     }
 
+    let stud_Size = 6, heading_Class;
+    if(this.state.students.length < stud_Size){
+      heading_Class = 'blue bold';
+    }
+    else{
+      heading_Class = null;
+    }
 
     return (
       <div className='App'>
-
+        <h3 className={heading_Class}>In a React Root (App) Component</h3>
         {/* providing show/hide button which toggles the visibility attribute of component state */}
 
         <button style={Style1} onClick={this.visibility_handler}>
