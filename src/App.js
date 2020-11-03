@@ -62,23 +62,15 @@ class App extends Component {
 
   render() {
 
-    const Style1 = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      border : '1x solid blue',
-      padding: '8px',
-      cursor: 'pointer',
-      margin: '20px 10px 10px 10px'
-    }
-
-    // let Div1;
+    let headClass = [StyleClass.blue, StyleClass.bold];
+    let btnClass = '';
     let Div2 ;
     
     // conditionally define the JSX sections, true condition
 
     if(this.state.visibility){
       
+      btnClass = StyleClass.red;
       // iterate a list & create components over array
       Div2 = (
         <div>{
@@ -91,38 +83,21 @@ class App extends Component {
       })
       }</div>
       );
-
-     Style1.backgroundColor = 'red';
     }
 
     // conditionally define JSX, false condition
     else{
-      // Div1 = null;
+      
       Div2 = null;
-      Style1.backgroundColor = 'green';
-    }
-
-    let stud_Size = 6, heading_Class;
-    if(this.state.students.length < stud_Size){
-      heading_Class = 'blue bold';
-    }
-    else{
-      heading_Class = null;
-    }
-
-    const random = Math.random();
-    if( random > 0.8 ){
-        let err = new Error(`random is ${random}`);
-        ErrorBoundary.prototype.catchError(err);
     }
 
     return (
       <ErrorBoundary>
       <div className={StyleClass.App}>
-        <h3 className={heading_Class}>In a React Root (App) Component</h3>
+        <h3 className={headClass.join(' ')}>In a React Root (App) Component</h3>
         {/* providing show/hide button which toggles the visibility attribute of component state */}
 
-        <button style={Style1} onClick={this.visibility_handler}>
+        <button className={btnClass} onClick={this.visibility_handler}>
           {this.state.visibility ? 
           <i>Hide</i>:
           <i>Show</i>}
@@ -131,7 +106,6 @@ class App extends Component {
         
         {/* define conditioned section above & show them in a clean way */}
         
-        {/* { Div1 } */}
         { Div2 }
       </div>  
       </ErrorBoundary>
