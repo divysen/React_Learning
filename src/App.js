@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
+import StyleClass from './App.css';
 import Student from './Student/Student';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
 
@@ -82,10 +83,10 @@ class App extends Component {
       Div2 = (
         <div>{
           this.state.students.map( (std, idx) => {
-          return  <Student 
-          key={std.id} name={std.name} cgpa={std.cgpa} 
-          click={() => this.deleteStudent_handler(idx)}
-          twowaybind={(event) => this.twoWay_Binding(event, std.id)}>
+          return <Student 
+                    key={std.id} name={std.name} cgpa={std.cgpa} 
+                    click={() => this.deleteStudent_handler(idx)}
+                    twowaybind={(event) => this.twoWay_Binding(event, std.id)}>
           </Student>
       })
       }</div>
@@ -109,8 +110,15 @@ class App extends Component {
       heading_Class = null;
     }
 
+    const random = Math.random();
+    if( random > 0.8 ){
+        let err = new Error(`random is ${random}`);
+        ErrorBoundary.prototype.catchError(err);
+    }
+
     return (
-      <div className='App'>
+      <ErrorBoundary>
+      <div className={StyleClass.App}>
         <h3 className={heading_Class}>In a React Root (App) Component</h3>
         {/* providing show/hide button which toggles the visibility attribute of component state */}
 
@@ -126,6 +134,7 @@ class App extends Component {
         {/* { Div1 } */}
         { Div2 }
       </div>  
+      </ErrorBoundary>
     );
   }
 }
