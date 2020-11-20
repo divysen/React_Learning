@@ -3,31 +3,29 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import counterReducer from '../src/store/reducers/counter';
-import resultsReducer from '../src/store/reducers/result';
+import axios from 'axios';
 
-const rootReducer = combineReducers({
-    ctr : counterReducer,
-    rst : resultsReducer
+axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com';
+axios.defaults.headers.common['Authorization'] = 'AUTH TOKEN';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+axios.interceptors.request.use(request => {
+    console.log(request);
+    // Edit request config
+    return request;
+}, error => {
+    console.log(error);
+    return Promise.reject(error);
 });
 
-// adding custom middleware function
-const logger = store => {
-    return next => {
-        return action => {
-            //console.log('[Middleware] dispatching', action);
-            next(action);
-            //console.log('[Middleware] state', store.getState());
-            //return result;
-        }
-    } 
-}
+axios.interceptors.response.use(response => {
+    console.log(response);
+    // Edit request config
+    return response;
+}, error => {
+    console.log(error);
+    return Promise.reject(error);
+});
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const Store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, thunk)));
-ReactDOM.render(<Provider store={Store}><App /></Provider>, document.getElementById('root'));
+ReactDOM.render( <App />, document.getElementById( 'root' ) );
 registerServiceWorker();
